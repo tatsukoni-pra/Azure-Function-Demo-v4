@@ -5,6 +5,7 @@ let globalContext: Context | null = null;
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 process.on('SIGTERM', async () => {
+    console.log('処理が途中終了されました。');
     // クリーンアップ処理
     if (globalContext) {
         globalContext.log('処理が途中終了されました。');
@@ -13,6 +14,7 @@ process.on('SIGTERM', async () => {
 });
 
 process.on('SIGINT', async () => {
+    console.log('処理が中断されました。');
     // クリーンアップ処理
     if (globalContext) {
         globalContext.log('処理が中断されました。');
@@ -21,6 +23,7 @@ process.on('SIGINT', async () => {
 });
 
 process.on('exit', async () => {
+    console.log('処理がexitされました。');
     // クリーンアップ処理
     if (globalContext) {
         globalContext.log('処理がexitされました。');
@@ -29,6 +32,7 @@ process.on('exit', async () => {
 });
 
 process.on('uncaughtException', async () => {
+    console.log('処理が異常終了されました。');
     // クリーンアップ処理
     if (globalContext) {
         globalContext.log('処理が異常終了されました。');
