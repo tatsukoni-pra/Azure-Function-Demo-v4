@@ -7,41 +7,33 @@ const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 process.on('SIGTERM', async () => {
     // クリーンアップ処理
     if (globalContext) {
-        await globalContext.log('処理が途中終了されました。');
+        globalContext.log('処理が途中終了されました。');
+        globalContext.done();
     }
-
-    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-    process.exit(0);
 });
 
 process.on('SIGINT', async () => {
     // クリーンアップ処理
     if (globalContext) {
-        await globalContext.log('処理が中断されました。');
+        globalContext.log('処理が中断されました。');
+        globalContext.done();
     }
-
-    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-    process.exit(0);
 });
 
 process.on('exit', async () => {
     // クリーンアップ処理
     if (globalContext) {
-        await globalContext.log('処理がexitされました。');
+        globalContext.log('処理がexitされました。');
+        globalContext.done();
     }
-
-    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-    process.exit(0);
 });
 
 process.on('uncaughtException', async () => {
     // クリーンアップ処理
     if (globalContext) {
-        await globalContext.log('処理が異常終了されました。');
+        globalContext.log('処理が異常終了されました。');
+        globalContext.done();
     }
-
-    // 必要なクリーンアップ処理が完了したら、プロセスを終了します。
-    process.exit(0);
 });
 
 const cosmosDBTrigger: AzureFunction = async function (context: Context, documents: any[]): Promise<void> {
