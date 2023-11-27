@@ -41,6 +41,8 @@ process.on('uncaughtException', async () => {
 });
 
 const cosmosDBTrigger: AzureFunction = async function (context: Context, documents: any[]): Promise<void> {
+    console.log('実行開始');
+
     globalContext = context;
     if (!!documents && documents.length > 0) {
         context.log('Document Id: ', documents[0].id);
