@@ -14,6 +14,12 @@ process.on('SIGINT', () => {
     process.exit(0);
 });
 
+process.on('SIGHUP', () => {
+    console.log('処理が中断されました。');
+    // クリーンアップ処理
+    process.exit(0);
+});
+
 process.on('exit', () => {
     console.log('処理がexitされました。');
     // クリーンアップ処理
@@ -32,19 +38,25 @@ const cosmosDBTrigger: AzureFunction = async function (context: Context, documen
         // クリーンアップ処理
         process.exit(0);
     });
-    
+
     process.on('SIGINT', () => {
         console.log('処理が中断されました。');
         // クリーンアップ処理
         process.exit(0);
     });
-    
+
+    process.on('SIGHUP', () => {
+        console.log('処理が中断されました。');
+        // クリーンアップ処理
+        process.exit(0);
+    });
+
     process.on('exit', () => {
         console.log('処理がexitされました。');
         // クリーンアップ処理
         process.exit(0);
     });
-    
+
     process.on('uncaughtException', () => {
         console.log('処理が異常終了されました。');
         // クリーンアップ処理
