@@ -27,6 +27,30 @@ process.on('uncaughtException', () => {
 });
 
 const cosmosDBTrigger: AzureFunction = async function (context: Context, documents: any[]): Promise<void> {
+    process.on('SIGTERM', () => {
+        console.log('処理が途中終了されました。');
+        // クリーンアップ処理
+        process.exit(0);
+    });
+    
+    process.on('SIGINT', () => {
+        console.log('処理が中断されました。');
+        // クリーンアップ処理
+        process.exit(0);
+    });
+    
+    process.on('exit', () => {
+        console.log('処理がexitされました。');
+        // クリーンアップ処理
+        process.exit(0);
+    });
+    
+    process.on('uncaughtException', () => {
+        console.log('処理が異常終了されました。');
+        // クリーンアップ処理
+        process.exit(0);
+    });
+
     console.log('実行開始');
 
     if (!!documents && documents.length > 0) {
