@@ -1,49 +1,34 @@
 import { AzureFunction, Context } from "@azure/functions"
 
-let globalContext: Context | null = null;
-
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-process.on('SIGTERM', async () => {
+process.on('SIGTERM', () => {
     console.log('処理が途中終了されました。');
     // クリーンアップ処理
-    if (globalContext) {
-        globalContext.log('処理が途中終了されました。');
-        globalContext.done();
-    }
+    process.exit(0);
 });
 
-process.on('SIGINT', async () => {
+process.on('SIGINT', () => {
     console.log('処理が中断されました。');
     // クリーンアップ処理
-    if (globalContext) {
-        globalContext.log('処理が中断されました。');
-        globalContext.done();
-    }
+    process.exit(0);
 });
 
-process.on('exit', async () => {
+process.on('exit', () => {
     console.log('処理がexitされました。');
     // クリーンアップ処理
-    if (globalContext) {
-        globalContext.log('処理がexitされました。');
-        globalContext.done();
-    }
+    process.exit(0);
 });
 
-process.on('uncaughtException', async () => {
+process.on('uncaughtException', () => {
     console.log('処理が異常終了されました。');
     // クリーンアップ処理
-    if (globalContext) {
-        globalContext.log('処理が異常終了されました。');
-        globalContext.done();
-    }
+    process.exit(0);
 });
 
 const cosmosDBTrigger: AzureFunction = async function (context: Context, documents: any[]): Promise<void> {
     console.log('実行開始');
 
-    globalContext = context;
     if (!!documents && documents.length > 0) {
         context.log('Document Id: ', documents[0].id);
     }
