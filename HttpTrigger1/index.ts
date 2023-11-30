@@ -1,15 +1,38 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 
+const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+process.on('SIGTERM', () => {
+    console.log('SIGTERM');
+    process.exit(0);
+});
+
+process.on('SIGINT', () => {
+    console.log('SIGINT');
+    process.exit(0);
+});
+
+process.on('SIGHUP', () => {
+    console.log('SIGHUP');
+    process.exit(0);
+});
+
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    context.log('HTTP trigger function processed a request.');
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+    console.log('実行開始');
+
+    await sleep(30000);
+    context.log('30s...');
+    await sleep(60000);
+    context.log('90s...');
+    await sleep(60000);
+    context.log('150s...');
+    await sleep(60000);
+    context.log('210s...');
+
+    context.log('Finished!!!');
 
     context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: responseMessage
+        body: "Hello, World!"
     };
 
 };
