@@ -1,9 +1,21 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { CosmosClient, PatchOperation } from "@azure/cosmos";
+
+const client = new CosmosClient(process.env["cosmosdbtatsukonitestv2_DOCUMENTDB"]);
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-process.on('SIGTERM', () => {
-    console.log('Function SIGTERM');
+process.on('SIGTERM', async () => {
+    let timeStamp = new Date().toISOString();
+    const container = client.database("TatsukoniTest2").container("tatsukoni-test-2");
+    const operations: PatchOperation[] = [
+        {
+            op: "replace", // replace operation を使用
+            path: "/text", // 更新するプロパティのパス
+            value: "Function SIGTERM: " + timeStamp
+        }
+    ];
+    await container.item("1", "1").patch(operations);
     process.exit(0);
 });
 
