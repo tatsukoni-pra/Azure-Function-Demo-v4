@@ -14,14 +14,12 @@ const cosmosDBTrigger: AzureFunction = async function (context: Context, documen
         context.log('Document Id: ', documents[0].id);
     }
 
-    await sleep(30000);
+    await sleep(10000);
+    context.log('10秒経過...');
+    await sleep(10000);
+    context.log('20秒経過...');
+    await sleep(10000);
     context.log('30秒経過...');
-    await sleep(60000);
-    context.log('1分30秒経過...');
-    await sleep(60000);
-    context.log('2分30秒経過...');
-    await sleep(60000);
-    context.log('3分30秒経過');
 
     console.log('Function Finished');
 }
