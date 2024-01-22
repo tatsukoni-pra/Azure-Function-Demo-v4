@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
-    "@azure/service-bus": "^7.9.3"
+    "@azure/service-bus": "^7.9.3",
+    "crypto": "^1.0.1"
   },
   "devDependencies": {
     "@azure/functions": "^3.0.0",
