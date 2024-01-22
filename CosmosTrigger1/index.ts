@@ -1,5 +1,6 @@
 import { AzureFunction, Context } from "@azure/functions"
 import { ServiceBusClient } from "@azure/service-bus";
+import crypto from "crypto";
 
 const connectionString = process.env.SERVICE_BUS_CONNECTION_STRING;
 const queueName = "mytopic";
