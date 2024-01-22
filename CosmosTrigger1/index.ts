@@ -37,6 +37,8 @@ const cosmosDBTrigger: AzureFunction = async function (context: Context, documen
 
         console.log(`Sent a batch of messages to the queue: ${queueName}`);
         await sender.close();
+    } catch (err) {
+        console.log(err);
     } finally {
         await sbClient.close();
     }
